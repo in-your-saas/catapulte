@@ -1,0 +1,11 @@
+{
+  "extends": ["eslint:recommended", "google"],
+  "env": {
+    "node": true,
+    "mocha": true,
+    "es6": true
+  },
+  "rules": {
+    
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "mail-magic-api",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Jérémie Drouet <jeremie.drouet@gmail.com>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "nconf": "^0.10.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "commitizen": "^2.10.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^5.1.0",
+    "eslint-config-google": "^0.9.1",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.0",
+    "nyc": "^12.0.2",
+    "supertest": "^3.1.0"
+  },
+  "scripts": {
+    "commit": "git-cz",
+    "coverage": "nyc mocha",
+    "lint": "eslint source test",
+    "start": "node source/index.js",
+    "test": "mocha",
+    "watch": "nodemon -w source source/index.js"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
