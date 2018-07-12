@@ -1,10 +1,20 @@
 // const {expect} = require('chai');
+const sinon = require('sinon');
 const supertest = require('supertest');
 
+const rabbit = require('../source/service/rabbit');
 const request = supertest(require('../source/web'));
 
 describe('controller send', () => {
+  beforeEach(() => {
+    this.rabbit = sinon.mock(rabbit);
+  });
+  afterEach(() => {
+    this.rabbit.restore();
+  });
+
   it('should return ok', () => {
+    this.rabbit.expects('send').once().returns(Promise.resolve());
     return request
       .post('/mails')
       .send({
@@ -24,6 +34,9 @@ describe('controller send', () => {
           },
         ],
       })
-      .expect(202);
+      .expect(202)
+      .expect(() => {
+        this.rabbit.verify();
+      });
   });
 });

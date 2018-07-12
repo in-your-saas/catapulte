@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const rabbit = require('../service/rabbit');
 
 const userSchema = Joi.object().keys({
   email: Joi.string().email().lowercase().required(),
@@ -17,5 +18,7 @@ const schema = Joi.object().keys({
 module.exports = (req, res, next) => {
   const body = Joi.validate(req.body, schema, {stripUnknown: true});
   if (body.error) return next(body.error);
-  return res.status(202).send();
+  return rabbit.send(body.value)
+    .then(() => res.status(202).send())
+    .catch(next);
 };

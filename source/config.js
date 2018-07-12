@@ -7,5 +7,9 @@ module.exports = require('nconf')
   .defaults({
     port: 3200,
     logger: 'tiny',
+    rabbit: {
+      url: 'amqp://guest:guest@localhost/mail-magic',
+      queue: 'send-email',
+    },
   });
 
