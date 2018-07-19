@@ -1,42 +1,49 @@
-// const {expect} = require('chai');
+const nock = require('nock');
 const sinon = require('sinon');
-const supertest = require('supertest');
+const {expect} = require('chai');
 
-const rabbit = require('../source/service/rabbit');
-const request = supertest(require('../source/web'));
+const controller = require('../source/controller/mail-send');
+const mailer = require('../source/service/mailer');
+const config = require('../source/config');
 
-describe('controller send', () => {
+describe('controller mail send', () => {
   beforeEach(() => {
-    this.rabbit = sinon.mock(rabbit);
+    this.scope = nock(config.get('jolimail').baseURL)
+      .get('/api/templates/my-template-id/content')
+      .reply(200, {
+        title: 'hey <%= name %>!',
+        text: `
+        Hello <%= name %>!
+        How are you?!
+        `,
+        mjml: `
+        <mjml>
+        </mjml>
+        `,
+      });
+  });
+  beforeEach(() => {
+    this.mailer = sinon.mock(mailer);
   });
   afterEach(() => {
-    this.rabbit.restore();
+    nock.cleanAll();
+  });
+  afterEach(() => {
+    this.mailer.restore();
   });
 
-  it('should return ok', () => {
-    this.rabbit.expects('send').once().returns(Promise.resolve());
-    return request
-      .post('/mails')
-      .send({
-        from: {
-          email: 'jean@nowhe.re',
-          name: 'Jean Nowhere',
-        },
-        template: '6422882a-2b72-418d-a744-d4c4523d4d77',
-        recipients: [
-          {
-            to: {
-              email: 'recipient@nowhe.re',
-            },
-            substitutions: {
-              'FIRST_NAME': 'Recipient',
-            },
-          },
-        ],
-      })
-      .expect(202)
-      .expect(() => {
-        this.rabbit.verify();
+  it('should call mail-magic api', () => {
+    const ch = {ack: sinon.fake()};
+    const msg = {
+      content: Buffer.from(JSON.stringify({
+        template_id: 'my-template-id',
+      })),
+    };
+    this.mailer.expects('sendMailAsync').once();
+    return controller(ch)(msg)
+      .then(() => {
+        expect(this.scope.isDone()).to.eql(true);
+        this.mailer.verify();
       });
   });
 });
