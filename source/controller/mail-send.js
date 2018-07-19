@@ -16,7 +16,7 @@ const convertTemplates = (templates, substitutions) => {
   return {subject, text, html};
 };
 
-const buildEmail = (body, templates) => ({
+const buildEmail = (templates, body) => ({
   from: body.from,
   to: body.to,
   subject: templates.subject,
@@ -28,8 +28,8 @@ module.exports = (ch) => (msg) => {
   const body = JSON.parse(msg.content.toString());
   return jolimail
     .getTemplate(body.template_id)
-    .then(convertTemplates)
-    .then((templates) => buildEmail(body, templates))
+    .then((templates) => convertTemplates(templates, body.substitutions))
+    .then((templates) => buildEmail(templates, body))
     .then((result) => mailer.sendMailAsync(result))
     .then(debug)
     .catch(debug)

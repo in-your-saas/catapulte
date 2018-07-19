@@ -18,21 +18,12 @@ describe('controller mail create', () => {
     return request
       .post('/mails')
       .send({
-        from: {
-          email: 'jean@nowhe.re',
-          name: 'Jean Nowhere',
-        },
+        from: 'jean@nowhe.re',
+        to: 'recipient@nowhe.re',
         template: '6422882a-2b72-418d-a744-d4c4523d4d77',
-        recipients: [
-          {
-            to: {
-              email: 'recipient@nowhe.re',
-            },
-            substitutions: {
-              'FIRST_NAME': 'Recipient',
-            },
-          },
-        ],
+        substitutions: {
+          'FIRST_NAME': 'Recipient',
+        },
       })
       .expect(202)
       .expect(() => {

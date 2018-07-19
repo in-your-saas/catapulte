@@ -1,18 +1,10 @@
 const Joi = require('joi');
 const rabbit = require('../service/rabbit');
 
-const userSchema = Joi.object().keys({
-  email: Joi.string().email().lowercase().required(),
-  name: Joi.string(),
-});
-
 const schema = Joi.object().keys({
-  from: userSchema.required(),
-  template: Joi.string().uuid().required(),
-  recipients: Joi.array().items(Joi.object().keys({
-    to: userSchema.required(),
-    substitutions: Joi.object(),
-  })).min(1).required(),
+  from: Joi.string().required(),
+  to: Joi.string().required(),
+  substitutions: Joi.object(),
 }).required();
 
 module.exports = (req, res, next) => {
