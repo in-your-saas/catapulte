@@ -6,13 +6,21 @@ const mailer = require('../service/mailer');
 
 const substitute = (value, substitutions, defaultValue = '') => {
   if (!value) return defaultValue;
-  return template(value, substitutions);
+  return template(value)(substitutions);
+};
+
+const convertMjml = (mjml, substitutions) => {
+  const result = mjml2html(substitute(mjml, substitutions));
+  if (result.errors.length) {
+    throw result.errors[0];
+  }
+  return result.html;
 };
 
 const convertTemplates = (templates, substitutions) => {
   const subject = substitute(templates.subject, substitutions);
   const text = substitute(templates.text, substitutions);
-  const html = mjml2html(substitute(templates.mjml, substitutions));
+  const html = convertMjml(templates.mjml, substitutions);
   return {subject, text, html};
 };
 

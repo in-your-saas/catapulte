@@ -13,17 +13,9 @@ module.exports = require('nconf')
       queue: 'send-email',
     },
     mailer: {
-      pool: false,
+      // use mailhog for testing
       host: 'smtp.example.com',
-      port: 465,
-      auth: {
-        user: 'username',
-        pass: 'pass',
-      },
-      tls: {
-        // do not fail on invalid certs
-        rejectUnauthorized: false,
-      },
+      port: 1025,
     },
     jolimail: {
       baseURL: 'http://localhost:3300',
