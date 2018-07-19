@@ -1,0 +1,29 @@
+{
+  "name": "Catapulte",
+  "description": "This app send nice emails.",
+  "keywords": [
+    "productivity",
+    "mail",
+    "in-your-saas"
+  ],
+  "success_url": "/",
+  "env": {
+    "jolimail_baseURL": {
+      "description": "The url of the jolimail instance",
+      "value": "https://api.jolimail.io"
+    },
+    "jolimail_headers_authorization": {
+      "description": "The token to authenticate to jolimail",
+      "value": "YOUNEEDTOCHANGETHIS"
+    },
+    "mailer_host": {
+      "value": "smtp.example.com"
+    },
+    "mailer_port": {
+      "value": "465"
+    }
+  },
+  "addons": [
+    "cloudamqp"
+  ]
+}
