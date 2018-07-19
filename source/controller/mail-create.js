@@ -2,6 +2,7 @@ const Joi = require('joi');
 const rabbit = require('../service/rabbit');
 
 const schema = Joi.object().keys({
+  template_id: Joi.string().uuid().required(),
   from: Joi.string().required(),
   to: Joi.string().required(),
   substitutions: Joi.object(),
