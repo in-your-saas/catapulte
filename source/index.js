@@ -8,9 +8,9 @@ const startWeb = (cmd) => {
     const web = require('./web');
     const config = require('./config');
 
-    web.listen(config.get('port'), (err) => {
+    web.listen(config.get('PORT'), (err) => {
       if (err) return reject(err);
-      console.log(`web listening on port ${config.get('port')}`);
+      console.log(`web listening on port ${config.get('PORT')}`);
       return resolve();
     });
   });

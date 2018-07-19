@@ -2,12 +2,11 @@ const pck = require('../package.json');
 
 module.exports = require('nconf')
   .env({
-    lowerCase: true,
     parseValues: true,
     separator: '_',
   })
   .defaults({
-    port: 3200,
+    PORT: 3200,
     logger: 'tiny',
     rabbit: {
       url: process.env.CLOUDAMQP_URL || 'amqp://guest:guest@localhost/mail-magic',
