@@ -9,7 +9,7 @@ module.exports = require('nconf')
     PORT: 3200,
     logger: 'tiny',
     rabbit: {
-      url: process.env.CLOUDAMQP_URL || 'amqp://guest:guest@localhost/mail-magic',
+      url: process.env.CLOUDAMQP_URL || 'amqp://guest:guest@localhost/catapulte',
       queue: 'send-email',
     },
     mailer: {
