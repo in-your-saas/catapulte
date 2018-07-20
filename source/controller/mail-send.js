@@ -4,16 +4,12 @@ const debug = require('debug')('app:ctrl:mail-send');
 const jolimail = require('../service/jolimail');
 const mailer = require('../service/mailer');
 
-const substitute = (value, substitutions, defaultValue = '') => {
-  if (!value) return defaultValue;
+const substitute = (value, substitutions) => {
   return template(value)(substitutions);
 };
 
 const convertMjml = (mjml, substitutions) => {
   const result = mjml2html(substitute(mjml, substitutions));
-  if (result.errors.length) {
-    throw result.errors[0];
-  }
   return result.html;
 };
 

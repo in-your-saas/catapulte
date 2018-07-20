@@ -20,7 +20,7 @@ describe('controller mail create', () => {
       .send({
         from: 'jean@nowhe.re',
         to: 'recipient@nowhe.re',
-        template: '6422882a-2b72-418d-a744-d4c4523d4d77',
+        template_id: '6422882a-2b72-418d-a744-d4c4523d4d77',
         substitutions: {
           'FIRST_NAME': 'Recipient',
         },
@@ -29,5 +29,19 @@ describe('controller mail create', () => {
       .expect(() => {
         this.rabbit.verify();
       });
+  });
+
+  it('should throw an error', () => {
+    return request
+      .post('/mails')
+      .send({
+        from: 'jean@nowhe.re',
+        to: 'recipient@nowhe.re',
+        template_id: '2b72-418d-a744-d4c4523d4d77',
+        substitutions: {
+          'FIRST_NAME': 'Recipient',
+        },
+      })
+      .expect(422);
   });
 });
