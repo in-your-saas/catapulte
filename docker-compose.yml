@@ -1,0 +1,16 @@
+version: '3'
+services:
+  rabbit:
+    image: "rabbitmq:alpine"
+    environment:
+      - RABBITMQ_DEFAULT_VHOST=catapulte
+  mailhog:
+    image: "mailhog/mailhog:latest"
+  catapulte:
+    build: .
+    ports:
+      - "3200:3200"
+    environment:
+      - "mailer_host=mailhog"
+      - "mailer_port=1025"
+      - "rabbit_url=amqp://guest:guest@rabbit/catapulte"
