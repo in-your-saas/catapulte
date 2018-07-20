@@ -14,3 +14,5 @@ jobs:
       - run: npm install
       - run: npm run lint
       - run: npm run coverage
+      - run: ./node_modules/.bin/nyc report --reporter=text-lcov > coverage.lcov
+      - run: ./node_modules/.bin/codecov
