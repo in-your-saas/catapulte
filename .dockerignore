@@ -1,4 +1,5 @@
 .nyc_output
+.circleci
 node_modules
 test
 .eslintrc
