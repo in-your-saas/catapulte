@@ -18,11 +18,9 @@ module.exports = require('nconf')
       port: 1025,
     },
     jolimail: {
-      baseURL: 'http://localhost:3300',
-      headers: {
-        authorization: '',
-        version: pck.version,
-      },
+      url: 'http://localhost:3300',
+      token: '',
+      version: pck.version,
     },
   });
 
