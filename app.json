@@ -8,18 +8,20 @@
   ],
   "success_url": "/",
   "env": {
-    "jolimail_baseURL": {
+    "jolimail_url": {
       "description": "The url of the jolimail instance",
       "value": "https://api.jolimail.io"
     },
-    "jolimail_headers_authorization": {
+    "jolimail_token": {
       "description": "The token to authenticate to jolimail",
       "value": "YOUNEEDTOCHANGETHIS"
     },
     "mailer_host": {
+      "description": "The host of your smtp server",
       "value": "smtp.example.com"
     },
     "mailer_port": {
+      "description": "The port of your smtp server",
       "value": "465"
     }
   },

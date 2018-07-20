@@ -4,6 +4,10 @@
 
 Let's be honest, it's a temporary name...
 
+## Start catapulte on Heroku
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/in-your-saas/catapulte)
+
 ## Build the docker image
 
 ```bash
