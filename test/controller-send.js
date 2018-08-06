@@ -20,7 +20,7 @@ describe('controller mail send', () => {
   describe('with good templates', () => {
     beforeEach(() => {
       this.scope = nock(config.get('jolimail').url)
-        .get('/api/templates/my-template-id/content')
+        .get('/api/templates/my-template-id/render')
         .reply(200, {
           subject: 'hey <%= name %>!',
           text: `
@@ -70,7 +70,7 @@ describe('controller mail send', () => {
   describe('with wrong templates', () => {
     beforeEach(() => {
       this.scope = nock(config.get('jolimail').url)
-        .get('/api/templates/my-template-id/content')
+        .get('/api/templates/my-template-id/render')
         .reply(200, {
           subject: 'hey <%= name %>!',
           text: `

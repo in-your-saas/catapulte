@@ -10,7 +10,7 @@ const client = axios.create({
 });
 
 const getTemplate = (templateId) => client
-  .get(`/api/templates/${templateId}/content`)
+  .get(`/api/templates/${templateId}/render`)
   .then((res) => res.data);
 
 module.exports = {
