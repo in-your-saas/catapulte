@@ -34,3 +34,14 @@ I'd say yes...
   - You want to customise the way you authenticate to your SMTP
   - You want something user friendly enough that your manager can write the emails
 
+## How can you use it?
+
+It's really simple.
+
+- Install catapulte following the [documentation](doc/index.md)
+- Create an account on [jolimail.io](https://jolimail.io)
+- Configure catapulte following the [documentation](doc/index.md)
+- Create you templates on [jolimail.io](https://jolimail.io)
+- Call the catapulte's REST API to send emails (the doc is coming)
+
+And that's it...
