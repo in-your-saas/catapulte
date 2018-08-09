@@ -1,6 +1,6 @@
 {
-  "name": "mail-magic-api",
-  "version": "0.0.1",
+  "name": "catapulte",
+  "version": "1.0.0",
   "main": "index.js",
   "author": "Jérémie Drouet <jeremie.drouet@gmail.com>",
   "license": "GPL-3.0",
