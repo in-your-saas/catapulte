@@ -1,8 +1,10 @@
 const mjml2html = require('mjml');
+const isEmpty = require('lodash/isEmpty');
 const template = require('lodash/template');
 const debug = require('debug')('app:ctrl:mail-send');
 const jolimail = require('../service/jolimail');
 const mailer = require('../service/mailer');
+const redis = require('../service/redis');
 
 const substitute = (value, substitutions) => {
   return template(value)(substitutions);
@@ -28,13 +30,28 @@ const buildEmail = (templates, body) => ({
   html: templates.html,
 });
 
+const loadAttachment = (attachment) => {
+  return redis.get(attachment.cid)
+    .then((content) => Object.assign({}, attachment, {content}));
+};
+
+const loadAttachments = (email, body) => {
+  if (isEmpty(body.attachments)) {
+    return email;
+  }
+  return Promise
+    .all(body.attachments.map(loadAttachment))
+    .then((attachments) => Object.assign({}, email, {attachments}));
+};
+
 module.exports = (ch) => (msg) => {
   const body = JSON.parse(msg.content.toString());
   return jolimail
     .getTemplate(body.template_id)
     .then((templates) => convertTemplates(templates, body.substitutions))
     .then((templates) => buildEmail(templates, body))
-    .then((result) => mailer.sendMailAsync(result))
+    .then((email) => loadAttachments(email, body))
+    .then((email) => mailer.sendMailAsync(email))
     .then(debug)
     .catch(debug)
     .then(() => ch.ack(msg));

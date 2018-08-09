@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:10
+      - image: redis
 
     environment:
       NODE_ENV: test

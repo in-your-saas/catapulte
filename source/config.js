@@ -12,6 +12,11 @@ module.exports = require('nconf')
       url: process.env.CLOUDAMQP_URL || 'amqp://guest:guest@localhost/catapulte',
       queue: 'send-email',
     },
+    redis: {
+      url: 'redis://localhost',
+      // 30 min before removing from the cache
+      expiration: 60 * 30,
+    },
     mailer: {
       // use mailhog for testing
       host: 'smtp.example.com',

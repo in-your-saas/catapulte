@@ -6,6 +6,7 @@ app.use(require('body-parser').json());
 app.use(require('./middleware/logger'));
 
 app.get('/', require('./controller/status'));
+app.post('/attachments', require('./controller/attachment-create'));
 app.post('/mails', require('./controller/mail-create'));
 
 app.use(require('./middleware/error-handler'));
