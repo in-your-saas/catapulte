@@ -23,7 +23,7 @@ module.exports = require('nconf')
       port: 1025,
     },
     jolimail: {
-      url: 'http://localhost:3300',
+      url: 'https://api.jolimail.io',
       token: '',
       version: pck.version,
     },
