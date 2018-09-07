@@ -8,10 +8,6 @@ module.exports = require('nconf')
   .defaults({
     PORT: 3200,
     logger: 'tiny',
-    rabbit: {
-      url: process.env.CLOUDAMQP_URL || 'amqp://guest:guest@localhost/catapulte',
-      queue: 'send-email',
-    },
     redis: {
       url: 'redis://localhost',
       // 30 min before removing from the cache

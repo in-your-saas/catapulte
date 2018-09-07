@@ -44,15 +44,13 @@ const loadAttachments = (email, body) => {
     .then((attachments) => Object.assign({}, email, {attachments}));
 };
 
-module.exports = (ch) => (msg) => {
-  const body = JSON.parse(msg.content.toString());
+module.exports = (job) => {
+  const body = job.data;
   return jolimail
     .getTemplate(body.template_id)
     .then((templates) => convertTemplates(templates, body.substitutions))
     .then((templates) => buildEmail(templates, body))
     .then((email) => loadAttachments(email, body))
     .then((email) => mailer.sendMailAsync(email))
-    .then(debug)
-    .catch(debug)
-    .then(() => ch.ack(msg));
+    .then(debug);
 };

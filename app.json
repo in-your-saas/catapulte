@@ -26,6 +26,6 @@
     }
   },
   "addons": [
-    "cloudamqp"
+    "heroku-redis"
   ]
 }

@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const rabbit = require('../service/rabbit');
+const queue = require('../service/queue');
 
 const schema = Joi.object().keys({
   template_id: Joi.string().uuid().required(),
@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
     stripUnknown: {objects: true, arrays: false},
   });
   if (body.error) return next(body.error);
-  return rabbit.send(body.value)
+  return queue.add(body.value)
     .then(() => res.status(202).send())
     .catch(next);
 };

@@ -37,19 +37,18 @@ describe('controller mail send', () => {
         });
     });
     it('should call mail-magic api', () => {
-      const ch = {ack: sinon.fake()};
-      const msg = {
-        content: Buffer.from(JSON.stringify({
+      const job = {
+        data: {
           from: 'sender@example.com',
           to: 'recipient@example.com',
           template_id: 'my-template-id',
           substitutions: {
             name: 'John',
           },
-        })),
+        },
       };
       const spy = this.mailer.expects('sendMailAsync').once();
-      return controller(ch)(msg)
+      return controller(job)
         .then(() => {
           expect(this.scope.isDone()).to.eql(true);
           expect(spy.firstCall.lastArg).to.have
@@ -64,15 +63,13 @@ describe('controller mail send', () => {
           `);
           expect(spy.firstCall.lastArg).to.have
             .property('html').to.contain('<!doctype html>');
-          expect(ch.ack.callCount).to.eql(1);
           this.mailer.verify();
         });
     });
 
     it('should load attachments', () => {
-      const ch = {ack: sinon.fake()};
-      const msg = {
-        content: Buffer.from(JSON.stringify({
+      const job = {
+        data: {
           from: 'sender@example.com',
           to: 'recipient@example.com',
           template_id: 'my-template-id',
@@ -83,16 +80,15 @@ describe('controller mail send', () => {
             cid: 'random-uuid',
             filename: 'image.png',
           }],
-        })),
+        },
       };
       this.mailer.expects('sendMailAsync').once();
       const spy = this.redis.expects('get').once()
         .returns(Promise.resolve(Buffer.from('oh-yeah!')));
-      return controller(ch)(msg)
+      return controller(job)
         .then(() => {
           expect(this.scope.isDone()).to.eql(true);
           expect(spy.firstCall.args[0]).to.eql('random-uuid');
-          expect(ch.ack.callCount).to.eql(1);
           this.mailer.verify();
           this.redis.verify();
         });
@@ -115,24 +111,21 @@ describe('controller mail send', () => {
         });
     });
     it('should call mail-magic api', () => {
-      const ch = {ack: sinon.fake()};
-      const msg = {
-        content: Buffer.from(JSON.stringify({
+      const job = {
+        data: {
           from: 'sender@example.com',
           to: 'recipient@example.com',
           template_id: 'my-template-id',
           substitutions: {
             name: 'John',
           },
-        })),
+        },
       };
       this.mailer.expects('sendMailAsync').never();
-      return controller(ch)(msg)
-        .then(() => {
-          expect(this.scope.isDone()).to.eql(true);
-          expect(ch.ack.callCount).to.eql(1);
-          this.mailer.verify();
-        });
+      return controller(job).catch(() => {
+        expect(this.scope.isDone()).to.eql(true);
+        this.mailer.verify();
+      });
     });
   });
 });

@@ -3,22 +3,22 @@ const sinon = require('sinon');
 const supertest = require('supertest');
 const uuidv4 = require('uuid/v4');
 
-const rabbit = require('../source/service/rabbit');
+const queue = require('../source/service/queue');
 const redis = require('../source/service/redis');
 const request = supertest(require('../source/web'));
 
 describe('controller mail create', () => {
   beforeEach(() => {
-    this.rabbit = sinon.mock(rabbit);
+    this.queue = sinon.mock(queue);
     this.redis = sinon.mock(redis);
   });
   afterEach(() => {
-    this.rabbit.restore();
+    this.queue.restore();
     this.redis.restore();
   });
 
   it('should return ok', () => {
-    this.rabbit.expects('send').once().returns(Promise.resolve());
+    this.queue.expects('add').once().returns(Promise.resolve());
     return request
       .post('/mails')
       .send({
@@ -31,7 +31,7 @@ describe('controller mail create', () => {
       })
       .expect(202)
       .expect(() => {
-        this.rabbit.verify();
+        this.queue.verify();
       });
   });
 
@@ -52,7 +52,7 @@ describe('controller mail create', () => {
   describe('attachment', () => {
     it('should accept files', () => {
       const cid = uuidv4();
-      this.rabbit.expects('send').once().returns(Promise.resolve());
+      this.queue.expects('add').once().returns(Promise.resolve());
       return request
         .post('/mails')
         .send({
@@ -68,7 +68,7 @@ describe('controller mail create', () => {
         })
         .expect(202)
         .expect(() => {
-          this.rabbit.verify();
+          this.queue.verify();
         });
     });
   });
