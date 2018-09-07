@@ -2,11 +2,12 @@ const pck = require('../package.json');
 
 module.exports = require('nconf')
   .env({
+    lowerCase: true,
     parseValues: true,
     separator: '_',
   })
   .defaults({
-    PORT: 3200,
+    port: 3200,
     logger: 'tiny',
     redis: {
       url: 'redis://localhost',
