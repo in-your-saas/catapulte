@@ -2,7 +2,7 @@
 
 ## Environment variables
 
-As I say in the [installation section](../installation/index.md), to start Catapulte, you need a RabbitMQ server and a SMTP server.
+As I say in the [installation section](./installation.md), to start Catapulte, you need a RabbitMQ server and a SMTP server.
 After that, you *just* need to configure Catapulte to do its job.
 
 - `PORT` is the port on which catapult API will listen (default `3200`)
