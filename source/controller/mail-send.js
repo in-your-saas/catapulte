@@ -45,6 +45,7 @@ const loadAttachments = (email, body) => {
 };
 
 module.exports = (job) => {
+  debug('send-email', job.data);
   const body = job.data;
   return jolimail
     .getTemplate(body.template_id)
@@ -52,5 +53,6 @@ module.exports = (job) => {
     .then((templates) => buildEmail(templates, body))
     .then((email) => loadAttachments(email, body))
     .then((email) => mailer.sendMailAsync(email))
-    .then(debug);
+    .then(debug)
+    .catch(debug);
 };
