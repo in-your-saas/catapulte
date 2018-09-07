@@ -1,9 +1,7 @@
 version: '3'
 services:
-  rabbit:
-    image: "rabbitmq:alpine"
-    environment:
-      - RABBITMQ_DEFAULT_VHOST=catapulte
+  redis:
+    image: redis:latest
   mailhog:
     image: "mailhog/mailhog:latest"
   catapulte:
@@ -13,4 +11,4 @@ services:
     environment:
       - "mailer_host=mailhog"
       - "mailer_port=1025"
-      - "rabbit_url=amqp://guest:guest@rabbit/catapulte"
+      - "redis_url=redis://redis"
