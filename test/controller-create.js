@@ -1,24 +1,23 @@
-// const {expect} = require('chai');
-const sinon = require('sinon');
+const {expect} = require('chai');
 const supertest = require('supertest');
 const uuidv4 = require('uuid/v4');
 
-const queue = require('../source/service/queue');
-const redis = require('../source/service/redis');
+const helper = require('./helper');
 const request = supertest(require('../source/web'));
 
 describe('controller mail create', () => {
   beforeEach(() => {
-    this.queue = sinon.mock(queue);
-    this.redis = sinon.mock(redis);
+    this.queue = helper.queue.mock();
   });
   afterEach(() => {
     this.queue.restore();
-    this.redis.restore();
   });
 
   it('should return ok', () => {
-    this.queue.expects('add').once().returns(Promise.resolve());
+    this.queueInstance = helper.queue.fakeInstance();
+    this.queue.expects('getInstance')
+      .once()
+      .returns(this.queueInstance);
     return request
       .post('/mails')
       .send({
@@ -32,6 +31,7 @@ describe('controller mail create', () => {
       .expect(202)
       .expect(() => {
         this.queue.verify();
+        expect(this.queueInstance.add.callCount).to.eql(1);
       });
   });
 
@@ -52,7 +52,10 @@ describe('controller mail create', () => {
   describe('attachment', () => {
     it('should accept files', () => {
       const cid = uuidv4();
-      this.queue.expects('add').once().returns(Promise.resolve());
+      this.queueInstance = helper.queue.fakeInstance();
+      this.queue.expects('getInstance')
+        .once()
+        .returns(this.queueInstance);
       return request
         .post('/mails')
         .send({
@@ -69,6 +72,7 @@ describe('controller mail create', () => {
         .expect(202)
         .expect(() => {
           this.queue.verify();
+          expect(this.queueInstance.add.callCount).to.eql(1);
         });
     });
   });

@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+const redis = require('./service/redis');
 
 const startWeb = (cmd) => {
   if (!['web', 'all'].includes(cmd)) {
@@ -26,6 +27,7 @@ const startWorker = (cmd) => {
 
 const start = (cmd) => {
   return Promise.all([
+    redis.connect(),
     startWeb(cmd),
     startWorker(cmd),
   ]);

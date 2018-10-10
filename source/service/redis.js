@@ -2,11 +2,28 @@ const redis = require('redis');
 const {promisify} = require('util');
 const config = require('../config').get('redis');
 
-const client = redis.createClient(config);
+class RedisService {
+  constructor(options) {
+    this.options = options;
+    this.client = null;
+  }
 
-module.exports = {
-  client,
-  expiration: config.expiration,
-  get: promisify(client.get).bind(client),
-  set: promisify(client.set).bind(client),
-};
+  connect() {
+    if (this.client) return this;
+    this.client = redis.createClient(this.options);
+    this.get = promisify(this.client.get).bind(this.client);
+    this.set = promisify(this.client.set).bind(this.client);
+    return this;
+  }
+
+  get() {
+    throw new Error('redis not connected');
+  }
+
+  set() {
+    throw new Error('redis not connected');
+  }
+}
+
+module.exports = new RedisService(config);
+

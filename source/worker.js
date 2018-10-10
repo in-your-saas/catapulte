@@ -4,7 +4,7 @@ const queue = require('./service/queue');
 
 const listen = () => {
   return mailer.verify()
-    .then(() => queue.process(controller));
+    .then(() => queue.getInstance().process(controller));
 };
 
 module.exports = {listen};
