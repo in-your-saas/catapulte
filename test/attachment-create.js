@@ -1,14 +1,13 @@
 const {expect} = require('chai');
-const sinon = require('sinon');
 const path = require('path');
 const supertest = require('supertest');
 
-const redis = require('../source/service/redis');
+const helper = require('./helper');
 const request = supertest(require('../source/web'));
 
 describe('controller attachment create', () => {
   beforeEach(() => {
-    this.redis = sinon.mock(redis);
+    this.redis = helper.redis.mock();
   });
   afterEach(() => {
     this.redis.restore();

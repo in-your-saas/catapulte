@@ -6,11 +6,18 @@ const jolimail = require('../service/jolimail');
 const mailer = require('../service/mailer');
 const redis = require('../service/redis');
 
+const debugAndThrow = (err) => {
+  debug(err);
+  throw err;
+};
+
 const substitute = (value, substitutions) => {
   return template(value)(substitutions);
 };
 
 const convertMjml = (mjml, substitutions) => {
+  // eslint-disable-next-line
+  console.log(mjml2html);
   const result = mjml2html(substitute(mjml, substitutions));
   return result.html;
 };
@@ -54,5 +61,5 @@ module.exports = (job) => {
     .then((email) => loadAttachments(email, body))
     .then((email) => mailer.sendMailAsync(email))
     .then(debug)
-    .catch(debug);
+    .catch(debugAndThrow);
 };

@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
     stripUnknown: {objects: true, arrays: false},
   });
   if (body.error) return next(body.error);
-  return queue.add(body.value)
+  return queue.getInstance().add(body.value)
     .then(() => res.status(202).send())
     .catch(next);
 };
