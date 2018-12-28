@@ -1,4 +1,4 @@
-const mjml2html = require('mjml').default;
+const mjml2html = require('mjml');
 const isEmpty = require('lodash/isEmpty');
 const template = require('lodash/template');
 const debug = require('debug')('app:ctrl:mail-send');
