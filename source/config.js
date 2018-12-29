@@ -19,6 +19,9 @@ module.exports = require('nconf')
       host: 'smtp.example.com',
       port: 1025,
     },
+    template: {
+      path: 'sample',
+    },
     jolimail: {
       url: 'https://api.jolimail.io',
       token: '',
