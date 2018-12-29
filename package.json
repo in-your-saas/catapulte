@@ -41,6 +41,7 @@
     "coverage": "nyc mocha",
     "lint": "eslint source test",
     "start": "node source/index.js",
+    "healthcheck": "node source/healthcheck.js",
     "test": "mocha",
     "watch": "nodemon -w source source/index.js"
   },
