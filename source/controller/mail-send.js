@@ -3,6 +3,7 @@ const isEmpty = require('lodash/isEmpty');
 const template = require('lodash/template');
 const debug = require('debug')('app:ctrl:mail-send');
 const jolimail = require('../service/jolimail');
+const templater = require('../service/templater');
 const mailer = require('../service/mailer');
 const redis = require('../service/redis');
 
@@ -44,12 +45,19 @@ const loadAttachments = (email, body) => {
     .then((attachments) => Object.assign({}, email, {attachments}));
 };
 
+const loadTemplates = (body) => {
+  if (body.template_id) {
+    return jolimail.getTemplate(body.template_id)
+      .then((templates) => convertTemplates(templates, body.substitutions));
+  }
+  return templater.load(body.template_name, body.substitutions);
+};
+
 module.exports = (job) => {
   debug('send-email', job.data);
   const body = job.data;
-  return jolimail
-    .getTemplate(body.template_id)
-    .then((templates) => convertTemplates(templates, body.substitutions))
+  return Promise.resolve(body)
+    .then(loadTemplates)
     .then((templates) => buildEmail(templates, body))
     .then((email) => loadAttachments(email, body))
     .then((email) => mailer.sendMailAsync(email))
