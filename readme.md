@@ -12,7 +12,7 @@ Catapulte is an open source mailer you can host yourself.
 
 You can use it to quickly catapult your transactionnal emails to destination.
 
-It works with the amazing https://www.jolimail.io template builder, so that your boss|marketing team|client|designer can make the email template herself.
+It works with the amazing https://www.jolimail.io template builder, so that your boss|marketing team|client|designer can make the email template themself. Or you can [build your own templates by hand](./doc/local-template.md).
 
 You can focus on things that really matter (let's face it, making responsive email templates is a pain).
 

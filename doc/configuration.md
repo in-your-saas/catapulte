@@ -19,6 +19,8 @@ After that, you *just* need to configure Catapulte to do its job.
 - `rabbit_url` is the url to reach your rabbitmq (default `amqp://guest:guest@localhost/catapulte`)
 - `rabbit_queue` is the queue in which catapult will put the mails (default `send-email`)
 
+- `template_path` is the path where you want catapulte to go get your [local templates](./local-template.md)
+
 ## API vs Worker
 
 Catapulte has 2 different sections. The API that receives your requests and put them in RabbitMQ and
