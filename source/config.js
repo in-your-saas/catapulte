@@ -23,7 +23,7 @@ module.exports = require('nconf')
       path: 'sample',
     },
     jolimail: {
-      url: 'https://api.jolimail.io',
+      url: 'https://app.jolimail.io',
       token: '',
       version: pck.version,
     },
